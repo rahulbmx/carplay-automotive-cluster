@@ -1,0 +1,1004 @@
+/* ==========================================================================
+   CARPLAY AUTOMOTIVE DIGITAL INSTRUMENT CLUSTER
+   Pure Automotive Styling | 7-Inch Landscape Display | Apple CarPlay Web View
+   Focused Detailed Speedometer & CNG Mileage Cluster (Zero Aviation Elements)
+   ========================================================================== */
+
+:root {
+  --font-display: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Share Tech Mono', 'Courier New', Courier, monospace;
+
+  /* Theme Defaults: Audi Virtual Cockpit (Precision Ice Cyan) */
+  --bg-space: #02050b;
+  --bg-cluster: #050a14;
+  --bg-card: rgba(10, 20, 36, 0.78);
+  --bg-card-border: rgba(0, 240, 255, 0.22);
+  --accent-cyan: #00f0ff;
+  --accent-lime: #00ff66;
+  --accent-amber: #ffaa00;
+  --accent-gold: #ffd600;
+  --accent-red: #ff2a4b;
+  --text-main: #f0f6fc;
+  --text-muted: #8b9bb4;
+  --text-dim: #43546f;
+  --needle-color: #00f0ff;
+  --needle-glow: rgba(0, 240, 255, 0.6);
+  --dial-center-cap: #0d1b2a;
+}
+
+/* ==========================================
+   THEME 1: CORVETTE / TRACK MODE
+   Aggressive angular polygons, carbon twill, race gold/crimson
+   ========================================== */
+.theme-corvette {
+  --bg-space: #050505;
+  --bg-cluster: #0d0f12;
+  --bg-card: rgba(22, 24, 29, 0.85);
+  --bg-card-border: rgba(255, 170, 0, 0.35);
+  --accent-cyan: #ffaa00;
+  --accent-lime: #ffd600;
+  --accent-amber: #ff6600;
+  --accent-gold: #ffd600;
+  --accent-red: #ff1a35;
+  --text-main: #ffffff;
+  --text-muted: #a6b1bd;
+  --text-dim: #5c6470;
+  --needle-color: #ff3344;
+  --needle-glow: rgba(255, 51, 68, 0.7);
+  --dial-center-cap: #1a0f0f;
+}
+
+/* ==========================================
+   THEME 2: PORSCHE TAYCAN
+   Futuristic OLED, Acid Lime Green & Ice Cyan
+   ========================================== */
+.theme-taycan {
+  --bg-space: #010408;
+  --bg-cluster: #040911;
+  --bg-card: rgba(7, 18, 25, 0.82);
+  --bg-card-border: rgba(0, 255, 102, 0.25);
+  --accent-cyan: #00f0ff;
+  --accent-lime: #00ff66;
+  --accent-amber: #ffaa00;
+  --accent-gold: #ffd600;
+  --accent-red: #ff3b30;
+  --text-main: #f5f9fc;
+  --text-muted: #7e9bb0;
+  --text-dim: #3a5365;
+  --needle-color: #00ff66;
+  --needle-glow: rgba(0, 255, 102, 0.75);
+  --dial-center-cap: #031412;
+}
+
+/* ==========================================
+   THEME 3: MARUTI SUZUKI S-CNG
+   Maruti SmartPlay signature electric blue & crisp white dials with green S-CNG leaf
+   ========================================== */
+.theme-maruti {
+  --bg-space: #030814;
+  --bg-cluster: #081124;
+  --bg-card: rgba(10, 24, 52, 0.85);
+  --bg-card-border: rgba(10, 132, 255, 0.35);
+  --accent-cyan: #0a84ff;
+  --accent-lime: #30d158;
+  --accent-amber: #ff9f0a;
+  --accent-gold: #ffd60a;
+  --accent-red: #ff453a;
+  --text-main: #ffffff;
+  --text-muted: #98a9c2;
+  --text-dim: #475a78;
+  --needle-color: #ff3b30;
+  --needle-glow: rgba(255, 59, 48, 0.65);
+  --dial-center-cap: #0c1d3b;
+}
+
+/* ==========================================
+   DAY MODE: DIRECT SUNLIGHT HIGH CONTRAST
+   High glare resistance for bright midday driving
+   ========================================== */
+.theme-day {
+  --bg-space: #d5dde8;
+  --bg-cluster: #e8eef6;
+  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-card-border: rgba(10, 30, 60, 0.22);
+  --accent-cyan: #0066cc;
+  --accent-lime: #008833;
+  --accent-amber: #b86500;
+  --accent-gold: #b38600;
+  --accent-red: #cc0022;
+  --text-main: #0a1424;
+  --text-muted: #3d506d;
+  --text-dim: #778ca6;
+  --needle-color: #cc0022;
+  --needle-glow: rgba(204, 0, 34, 0.35);
+  --dial-center-cap: #e1e7f0;
+}
+
+/* ==========================================
+   GLOBAL RESET & LOCK
+   Locked to 100vw and 100vh, zero scrolling
+   ========================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--bg-space);
+  color: var(--text-main);
+  font-family: var(--font-display);
+  font-size: 14px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================
+   LAPTOP BROWSER 7-INCH FRAME ENCLOSURE
+   ========================================== */
+#frame-viewport {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #111a28 0%, #03060c 85%, #000000 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.automotive-bezel {
+  position: relative;
+  width: 1024px;
+  height: 600px;
+  background: linear-gradient(145deg, #1f232b 0%, #111317 40%, #0d0f12 100%);
+  border-radius: 24px;
+  box-shadow: 
+    0 25px 70px rgba(0, 0, 0, 0.85),
+    0 0 0 2px #2d333e,
+    inset 0 2px 4px rgba(255, 255, 255, 0.12),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.6);
+  padding: 16px 20px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  transform-origin: center center;
+  transition: width 0.3s ease, height 0.3s ease, transform 0.2s ease-out;
+  box-sizing: border-box;
+}
+
+.automotive-bezel.res-1024x600 {
+  width: 1024px;
+  height: 600px;
+}
+.automotive-bezel.res-1280x720 {
+  width: 1160px;
+  height: 670px;
+}
+.automotive-bezel.res-1280x800 {
+  width: 1100px;
+  height: 700px;
+}
+
+/* Screws & Hardware accents */
+.bezel-screw {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #59616e 0%, #20242b 70%, #15171c 100%);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.3), 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+.bezel-screw::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 2px;
+  width: 8px;
+  height: 2px;
+  background: #090a0d;
+}
+.screw-tl { top: 6px; left: 8px; }
+.screw-tr { top: 6px; right: 8px; }
+.screw-bl { bottom: 6px; left: 8px; }
+.screw-br { bottom: 6px; right: 8px; }
+
+/* Bezel top hardware bar */
+.bezel-hardware-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px 8px 4px;
+  font-size: 10.5px;
+  color: #7b8696;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.bezel-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bezel-led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+  animation: ledPulse 2s infinite ease-in-out;
+}
+@keyframes ledPulse {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 0.4; }
+}
+
+.bezel-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.res-label {
+  font-size: 10px;
+  color: #5c687a;
+  margin-right: 2px;
+  margin-left: 6px;
+}
+
+/* ==========================================
+   MASTER CAUTION LIGHT BUTTON (RED, FLASHING OVER 80 KM/H)
+   ========================================== */
+.master-caution-btn {
+  background: rgba(255, 26, 53, 0.12);
+  border: 1.5px solid rgba(255, 26, 53, 0.45);
+  color: #ff5c72;
+  font-family: var(--font-display);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  padding: 3px 9px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+.master-caution-btn:hover {
+  background: rgba(255, 26, 53, 0.25);
+  color: #fff;
+  border-color: #ff2a4b;
+}
+.master-caution-btn.cluster-caution {
+  display: none;
+  margin-right: 12px;
+}
+body.direct-screen-mode .master-caution-btn.cluster-caution,
+body.fullscreen-active .master-caution-btn.cluster-caution {
+  display: inline-flex;
+}
+.master-caution-btn.active {
+  background: #ff1a35;
+  color: #ffffff;
+  border-color: #ff4d63;
+  box-shadow: 0 0 10px rgba(255, 26, 53, 0.8);
+}
+.master-caution-btn.blinking {
+  animation: masterCautionBlink 0.65s infinite alternate ease-in-out;
+}
+@keyframes masterCautionBlink {
+  0% {
+    opacity: 1;
+    background: #ff1a35;
+    box-shadow: 0 0 18px rgba(255, 26, 53, 1), inset 0 0 6px #ffffff;
+    border-color: #ffffff;
+    color: #ffffff;
+  }
+  50% {
+    opacity: 0.35;
+    background: rgba(140, 0, 20, 0.4);
+    box-shadow: 0 0 4px rgba(255, 26, 53, 0.2);
+    border-color: rgba(255, 26, 53, 0.4);
+    color: #ff8090;
+  }
+  100% {
+    opacity: 1;
+    background: #ff1a35;
+    box-shadow: 0 0 18px rgba(255, 26, 53, 1), inset 0 0 6px #ffffff;
+    border-color: #ffffff;
+    color: #ffffff;
+  }
+}
+
+.bezel-btn {
+  background: #181c22;
+  border: 1px solid #303744;
+  color: #9aa7b8;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.bezel-btn:hover {
+  background: #252c38;
+  color: #fff;
+  border-color: var(--accent-cyan);
+}
+.bezel-btn.active {
+  background: var(--accent-cyan);
+  color: #02050b;
+  border-color: var(--accent-cyan);
+}
+
+/* Fullscreen / In-Car Mode */
+body.direct-screen-mode #frame-viewport,
+body.fullscreen-active #frame-viewport {
+  background: var(--bg-space);
+  padding: 0;
+}
+body.direct-screen-mode .automotive-bezel,
+body.fullscreen-active .automotive-bezel {
+  width: 100vw !important;
+  height: 100vh !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  transform: none !important;
+}
+body.direct-screen-mode .bezel-screw,
+body.direct-screen-mode .bezel-hardware-bar,
+body.fullscreen-active .bezel-screw,
+body.fullscreen-active .bezel-hardware-bar {
+  display: none !important;
+}
+
+/* ==========================================
+   ACTUAL CLUSTER SCREEN SURFACE
+   ========================================== */
+.cluster-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  background: var(--bg-cluster);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cluster-screen::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+  z-index: 99;
+}
+
+.theme-corvette .cluster-screen {
+  background-image: 
+    radial-gradient(rgba(0, 0, 0, 0.4) 15%, transparent 16%),
+    radial-gradient(rgba(0, 0, 0, 0.4) 15%, transparent 16%),
+    linear-gradient(#0d0f12 0%, #08090a 100%);
+  background-size: 12px 12px, 12px 12px, 100% 100%;
+  background-position: 0 0, 6px 6px, 0 0;
+}
+
+/* ==========================================
+   TOP STATUS BAR
+   ========================================== */
+.status-bar {
+  height: 46px;
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: rgba(0, 0, 0, 0.55);
+  border-bottom: 1px solid var(--bg-card-border);
+  z-index: 10;
+  backdrop-filter: blur(8px);
+}
+
+.status-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+.gps-pod {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.gps-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: var(--accent-lime);
+  box-shadow: 0 0 8px var(--accent-lime);
+  transition: background-color 0.3s;
+}
+.gps-dot.searching {
+  background-color: var(--accent-amber);
+  box-shadow: 0 0 8px var(--accent-amber);
+  animation: gpsSearchPulse 1s infinite alternate;
+}
+@keyframes gpsSearchPulse {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+.gps-dot.simulated {
+  background-color: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+}
+.gps-title {
+  color: var(--text-muted);
+  font-weight: 700;
+  letter-spacing: 0.8px;
+}
+.gps-acc {
+  color: var(--text-dim);
+  font-size: 10.5px;
+}
+
+.status-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+}
+.digital-clock-pod {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.clock-time {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: 1px;
+}
+.clock-ampm {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.clock-divider {
+  color: var(--text-dim);
+  font-size: 12px;
+  margin: 0 4px;
+}
+.clock-date {
+  font-size: 11.5px;
+  color: var(--text-dim);
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.status-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+.weather-pod {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+.weather-icon {
+  font-size: 15px;
+}
+
+.black-ice-badge {
+  display: none;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 42, 75, 0.2);
+  border: 1px solid var(--accent-red);
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  animation: iceAlertBlink 1.2s infinite;
+  white-space: nowrap;
+}
+.black-ice-badge.active {
+  display: flex;
+}
+@keyframes iceAlertBlink {
+  0%, 100% { opacity: 1; background: rgba(255, 42, 75, 0.3); }
+  50% { opacity: 0.6; background: rgba(0, 240, 255, 0.25); border-color: var(--accent-cyan); }
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tool-btn {
+  min-width: 42px;
+  height: 32px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tool-btn:hover, .tool-btn:active {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-main);
+  border-color: var(--accent-cyan);
+}
+.tool-btn.active {
+  background: var(--accent-cyan);
+  color: #02050b;
+  border-color: var(--accent-cyan);
+}
+
+/* ==========================================
+   MAIN 3-BAY DIGITAL CLUSTER
+   Clean, spacious, zero widget override
+   ========================================== */
+.cluster-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 36% 28% 36%;
+  gap: 10px;
+  padding: 8px 12px 10px 12px;
+  overflow: hidden;
+  height: calc(100% - 46px);
+  position: relative;
+}
+
+.cluster-bay {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border: 1px solid var(--bg-card-border);
+  border-radius: 16px;
+  padding: 10px 12px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.bay-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 5px;
+  margin-bottom: 4px;
+}
+.bay-title {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.bay-sub-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+.live-ratio-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent-cyan);
+}
+
+/* ==========================================
+   BIG GAUGES & PERFECTED READOUT POSITIONING
+   ========================================== */
+.gauge-card {
+  flex: 1 1 auto;
+  min-height: 200px;
+  max-height: 245px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.gauge-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gauge-svg {
+  width: 100%;
+  height: 100%;
+  max-height: 240px;
+  overflow: visible;
+}
+
+/* Gauge Center Numerical Readout (Framed cleanly inside central pod) */
+.gauge-readout-center, .speed-readout-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: none;
+  z-index: 10;
+}
+.gauge-value, .speed-value {
+  font-family: var(--font-mono);
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 0.95;
+  color: var(--text-main);
+  text-shadow: 0 0 16px var(--needle-glow);
+  letter-spacing: -1px;
+}
+.gauge-unit, .speed-unit {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--accent-cyan);
+  margin-top: 3px;
+}
+
+/* ==========================================
+   METRICS PODS & GRIDS
+   ========================================== */
+.metrics-grid.grid-2x2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 6px 0;
+}
+.metric-pod {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+}
+.pod-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pod-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.mini-reset-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-muted);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.mini-reset-btn:hover {
+  background: var(--accent-cyan);
+  color: #02050b;
+}
+
+.pod-value-row {
+  display: flex;
+  align-items: baseline;
+  margin-top: 2px;
+}
+.pod-value {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+.pod-value.highlight {
+  color: var(--accent-gold);
+}
+.pod-unit {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+
+/* S-CNG Tank & Sensor Pods */
+.tank-status-pod, .speed-sensor-pod {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.tank-info-row, .sensor-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tank-pressure-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-lime);
+}
+.sensor-status-val {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent-cyan);
+}
+.tank-level-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.tank-level-fill {
+  height: 100%;
+  width: 92%;
+  background: linear-gradient(90deg, var(--accent-cyan) 0%, var(--accent-lime) 100%);
+  border-radius: 3px;
+  box-shadow: 0 0 6px var(--accent-cyan);
+}
+.tank-meta-row, .sensor-meta-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.tank-meta-row b, .sensor-meta-row b {
+  color: var(--text-main);
+  font-family: var(--font-mono);
+}
+
+/* ==========================================
+   BAY 2: EFFICIENCY CURVE PANEL
+   ========================================= */
+.efficiency-curve-panel {
+  flex: 1 1 auto;
+  min-height: 140px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+.curve-svg-wrapper {
+  width: 100%;
+  height: 100%;
+  min-height: 125px;
+}
+.curve-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.theme-selector-box {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.theme-select-title {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--text-dim);
+  letter-spacing: 0.8px;
+}
+.theme-buttons-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+.theme-tab-btn {
+  height: 28px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.theme-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+.theme-tab-btn.active {
+  background: var(--accent-cyan);
+  color: #02050b;
+  border-color: var(--accent-cyan);
+}
+
+/* ==========================================
+   SIMULATION TEST DRAWER
+   ========================================== */
+.simulation-drawer {
+  position: absolute;
+  top: 46px;
+  right: -360px;
+  width: 340px;
+  bottom: 0;
+  background: rgba(8, 14, 24, 0.96);
+  border-left: 1px solid var(--accent-cyan);
+  box-shadow: -10px 0 35px rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(16px);
+  z-index: 90;
+  transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  overflow-y: auto;
+}
+.simulation-drawer.open {
+  right: 0;
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+.drawer-title {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--accent-cyan);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.drawer-close-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.sim-section {
+  margin-bottom: 14px;
+}
+.sim-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+.sim-val {
+  font-family: var(--font-mono);
+  color: var(--accent-cyan);
+  font-weight: 700;
+}
+
+.sim-slider {
+  width: 100%;
+  height: 8px;
+  -webkit-appearance: none;
+  background: #192538;
+  border-radius: 4px;
+  outline: none;
+}
+.sim-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--accent-cyan);
+}
+
+.sim-presets-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 10px;
+}
+.preset-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-main);
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+.preset-btn:hover {
+  background: rgba(0, 240, 255, 0.15);
+  border-color: var(--accent-cyan);
+}
+.preset-btn.highlight {
+  border-color: var(--accent-red);
+  color: var(--accent-red);
+}
+
+/* ==========================================
+   RESPONSIVE ADJUSTMENTS
+   ========================================== */
+@media (max-width: 900px) {
+  .cluster-body { grid-template-columns: 36% 28% 36%; gap: 6px; padding: 6px; }
+  .gauge-value, .speed-value { font-size: 36px; }
+  .pod-value { font-size: 15px; }
+}

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Automotive Digital Cockpit | 7-Inch CarPlay Cluster</title>
+
+  <!-- PWA & Apple Web App Tags for Standalone CarPlay Display -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AutoCluster">
+  <meta name="theme-color" content="#02050b">
+  <link rel="manifest" href="manifest.json?v=2.2">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23050a14' stroke='%2300f0ff' stroke-width='6'/><path d='M30 65 L50 25 L70 65' fill='none' stroke='%23ffd600' stroke-width='8' stroke-linecap='round'/></svg>">
+
+  <!-- High-Tech Automotive Cluster Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css?v=2.2">
+</head>
+<body class="theme-audi">
+
+  <!-- 7-INCH AUTOMOTIVE FRAME CONTAINER (For Laptop Browser View & CarPlay) -->
+  <div id="frame-viewport">
+
+    <!-- PHYSICAL AUTOMOTIVE BEZEL CHASSIS (Renders on Laptop screen) -->
+    <div id="automotive-bezel" class="automotive-bezel res-1024x600">
+      
+      <!-- Screw Accents on Bezel Corners -->
+      <div class="bezel-screw screw-tl"></div>
+      <div class="bezel-screw screw-tr"></div>
+      <div class="bezel-screw screw-bl"></div>
+      <div class="bezel-screw screw-br"></div>
+
+      <!-- Hardware Top Trim Bar -->
+      <div class="bezel-hardware-bar">
+        <div class="bezel-brand">
+          <div class="bezel-led"></div>
+          <span>AUTOMOTIVE 7.0" HIGH-CONTRAST DIGITAL CLUSTER</span>
+        </div>
+
+        <div class="bezel-controls">
+          <!-- MASTER CAUTION BUTTON (Placed perfectly before the resolution) -->
+          <button id="master-caution-bezel-btn" class="master-caution-btn" title="Master Caution Over-Speed Warning (>80 km/h)">
+            <span class="caution-icon">⚠️</span>
+            <span class="caution-text">MASTER CAUTION</span>
+          </button>
+
+          <span class="res-label">RESOLUTION:</span>
+          <button class="bezel-btn res-btn active" data-res="1024x600">1024x600 (17:10)</button>
+          <button class="bezel-btn res-btn" data-res="1280x720">1280x720 (16:9)</button>
+          <button class="bezel-btn res-btn" data-res="1280x800">1280x800 (16:10)</button>
+        </div>
+      </div>
+
+      <!-- ACTUAL CLUSTER SCREEN (Locked 100% to Bezel or 100vw/100vh) -->
+      <div id="cluster-screen" class="cluster-screen">
+
+        <!-- ==========================================
+             TOP STATUS BAR (Clean, Spacious, No Collisions)
+             ========================================== -->
+        <header class="status-bar">
+          
+          <!-- Left: GPS Speed Status Only -->
+          <div class="status-left">
+            <div class="gps-pod">
+              <div id="gps-dot" class="gps-dot simulated"></div>
+              <span class="gps-title">GPS SPEED</span>
+              <span id="gps-acc" class="gps-acc">ACTIVE (±2.0m)</span>
+            </div>
+          </div>
+
+          <!-- Center: Master Caution (In-Cluster) + Digital Clock -->
+          <div class="status-center">
+            <button id="master-caution-cluster-btn" class="master-caution-btn cluster-caution" title="Master Caution Warning (>80 km/h)">
+              <span class="caution-icon">⚠️</span>
+              <span class="caution-text">MASTER CAUTION</span>
+            </button>
+            <div class="digital-clock-pod" title="Click to toggle 12h/24h">
+              <span id="clock-time" class="clock-time">12:20:30</span>
+              <span id="clock-ampm" class="clock-ampm"></span>
+              <span class="clock-divider">/</span>
+              <span id="clock-date" class="clock-date">SAT 24 OCT</span>
+            </div>
+          </div>
+
+          <!-- Right: Weather, Black Ice Alert & Toolbar -->
+          <div class="status-right">
+            <!-- Outside Air Temperature (OAT) & Weather -->
+            <div class="weather-pod">
+              <span id="weather-icon" class="weather-icon">☀️</span>
+              <span id="weather-temp" class="weather-temp">22.0°C</span>
+            </div>
+
+            <!-- Black Ice Warning (<= 3°C) -->
+            <div id="black-ice-badge" class="black-ice-badge">
+              <span>❄️</span>
+              <span>BLACK ICE (≤ 3°C)</span>
+            </div>
+
+            <!-- In-Car Toolbar (40px+ touch targets) -->
+            <div class="toolbar-group">
+              <button id="unit-btn" class="tool-btn" title="Toggle KM/H or MPH">KM/H</button>
+              <button id="day-night-btn" class="tool-btn" title="Toggle Day / Night Mode">🌙 NIGHT</button>
+              <button id="sound-btn" class="tool-btn" title="Toggle Sound">🔊</button>
+              <button id="sim-drawer-btn" class="tool-btn" title="Toggle Speed Lab">⚙️ SIM</button>
+              <button id="frame-toggle-btn" class="tool-btn" title="Toggle 7-inch Frame vs Direct Edge-to-Edge">📱 7"</button>
+              <button id="fullscreen-btn" class="tool-btn" title="Native Fullscreen">⛶</button>
+            </div>
+          </div>
+
+        </header>
+
+        <!-- ==========================================
+             MAIN 3-BAY DIGITAL CLUSTER
+             Bay 1 (36%): Detailed Mileage & Fuel
+             Bay 2 (28%): 56-Point Efficiency Analyzer
+             Bay 3 (36%): Detailed Speed & Odometer
+             ========================================== -->
+        <main class="cluster-body">
+
+          <!-- ==========================================
+               BAY 1: DETAILED CNG MILEAGE & FUEL TELEMETRY
+               ========================================== -->
+          <section class="cluster-bay bay-mileage">
+            
+            <div class="bay-header">
+              <span class="bay-title">CNG MILEAGE</span>
+              <span class="bay-sub-badge">S-CNG CALIBRATED</span>
+            </div>
+
+            <!-- BIG Primary Instant CNG Mileage Gauge -->
+            <div class="gauge-card">
+              <div class="gauge-viewport">
+                <svg id="cng-gauge-svg" class="gauge-svg" viewBox="0 0 280 240"></svg>
+                <div class="gauge-readout-center">
+                  <span id="instant-cng-value" class="gauge-value">45.0</span>
+                  <span id="instant-cng-unit" class="gauge-unit">KM / KG</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Detailed Mileage Metrics Grid -->
+            <div class="metrics-grid grid-2x2">
+              <div class="metric-pod">
+                <span class="pod-label">TRIP AVERAGE</span>
+                <div class="pod-value-row">
+                  <span id="trip-avg-mileage" class="pod-value">42.8</span>
+                  <span class="pod-unit">km/kg</span>
+                </div>
+              </div>
+              <div class="metric-pod">
+                <span class="pod-label">CNG CONSUMED</span>
+                <div class="pod-value-row">
+                  <span id="total-cng-consumed" class="pod-value">0.428</span>
+                  <span class="pod-unit">kg</span>
+                </div>
+              </div>
+              <div class="metric-pod">
+                <span class="pod-label">FUEL FLOW RATE</span>
+                <div class="pod-value-row">
+                  <span id="realtime-fuel-flow" class="pod-value">1.56</span>
+                  <span class="pod-unit">kg/h</span>
+                </div>
+              </div>
+              <div class="metric-pod">
+                <span class="pod-label">EST. RANGE</span>
+                <div class="pod-value-row">
+                  <span id="cng-range-val" class="pod-value" style="color:var(--accent-lime)">427</span>
+                  <span class="pod-unit">km</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- S-CNG Tank Pressure & Fuel Level -->
+            <div class="tank-status-pod">
+              <div class="tank-info-row">
+                <span class="pod-label">CNG TANK PRESSURE</span>
+                <span id="tank-pressure-val" class="tank-pressure-num">185 BAR</span>
+              </div>
+              <div class="tank-level-track">
+                <div id="tank-level-fill" class="tank-level-fill"></div>
+              </div>
+              <div class="tank-meta-row">
+                <span>REMAINING: <b id="tank-remain-val">9.5 kg (92%)</b></span>
+                <span>CAPACITY: <b>10.0 kg</b></span>
+              </div>
+            </div>
+
+          </section>
+
+          <!-- ==========================================
+               BAY 2: SPEED VS MILEAGE EFFICIENCY ANALYZER
+               ========================================== -->
+          <section class="cluster-bay bay-efficiency">
+
+            <div class="bay-header">
+              <span class="bay-title">EFFICIENCY CURVE</span>
+              <span id="curve-live-readout" class="live-ratio-tag">70.0 km/h ➔ 45.0 km/kg</span>
+            </div>
+
+            <!-- Large Live 56-Point Speed vs Mileage Efficiency Curve -->
+            <div class="efficiency-curve-panel">
+              <div class="curve-svg-wrapper">
+                <svg id="efficiency-curve-svg" class="curve-svg" viewBox="0 0 310 130"></svg>
+              </div>
+            </div>
+
+            <!-- Detailed Efficiency Correlation Pods -->
+            <div class="metrics-grid grid-2x2">
+              <div class="metric-pod">
+                <span class="pod-label">CALIBRATED MAX</span>
+                <div class="pod-value-row">
+                  <span class="pod-value highlight">45.0</span>
+                  <span class="pod-unit">km/kg</span>
+                </div>
+              </div>
+              <div class="metric-pod">
+                <span class="pod-label">EFFICIENCY SCORE</span>
+                <div class="pod-value-row">
+                  <span id="efficiency-score-val" class="pod-value highlight">100%</span>
+                  <span class="pod-unit">of max</span>
+                </div>
+              </div>
+              <div class="metric-pod">
+                <span class="pod-label">MAX DELTA</span>
+                <div class="pod-value-row">
+                  <span id="efficiency-delta-val" class="pod-value">0.0</span>
+                  <span class="pod-unit">km/kg</span>
+                </div>
+              </div>
+              <div class="metric-pod">
+                <span class="pod-label">BURN RATE</span>
+                <div class="pod-value-row">
+                  <span id="center-flow-rate" class="pod-value">1.56</span>
+                  <span class="pod-unit">kg/h</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Cluster Theme Switcher -->
+            <div class="theme-selector-box">
+              <span class="theme-select-title">CLUSTER THEME</span>
+              <div class="theme-buttons-row">
+                <button class="theme-tab-btn active" data-theme="theme-audi">AUDI</button>
+                <button class="theme-tab-btn" data-theme="theme-corvette">CORVETTE</button>
+                <button class="theme-tab-btn" data-theme="theme-taycan">TAYCAN</button>
+                <button class="theme-tab-btn" data-theme="theme-maruti">MARUTI S-CNG</button>
+              </div>
+            </div>
+
+          </section>
+
+          <!-- ==========================================
+               BAY 3: PRECISION AUTOMOTIVE SPEEDOMETER
+               ========================================== -->
+          <section class="cluster-bay bay-speed">
+
+            <div class="bay-header">
+              <span class="bay-title">PRECISION SPEED</span>
+              <span id="speed-sensor-badge" class="bay-sub-badge">GPS TRACKED</span>
+            </div>
+
+            <!-- BIG Primary Speedometer Gauge -->
+            <div class="gauge-card">
+              <div class="gauge-viewport">
+                <svg id="speedometer-svg" class="gauge-svg" viewBox="0 0 280 240"></svg>
+                <div class="speed-readout-center">
+                  <span id="speed-value" class="speed-value">70</span>
+                  <span id="speed-unit" class="speed-unit">KM / H</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Detailed Speed & Trip Metrics Grid -->
+            <div class="metrics-grid grid-2x2">
+              <div class="metric-pod">
+                <div class="pod-label-row">
+                  <span class="pod-label">TRIP DISTANCE</span>
+                  <button id="trip-reset-btn" class="mini-reset-btn" title="Reset Trip">RESET</button>
+                </div>
+                <div class="pod-value-row">
+                  <span id="odometer-val" class="pod-value">18.4</span>
+                  <span id="odometer-unit" class="pod-unit">km</span>
+                </div>
+              </div>
+              <div class="metric-pod">
+                <span class="pod-label">ELAPSED TIME</span>
+                <div class="pod-value-row">
+                  <span id="elapsed-time-val" class="pod-value">00:26:41</span>
+                </div>
+              </div>
+              <div class="metric-pod">
+                <span class="pod-label">TOP SPEED RECORD</span>
+                <div class="pod-value-row">
+                  <span id="top-speed-val" class="pod-value">74</span>
+                  <span id="top-speed-unit" class="pod-unit">km/h</span>
+                </div>
+              </div>
+              <div class="metric-pod">
+                <span class="pod-label">TRIP AVG SPEED</span>
+                <div class="pod-value-row">
+                  <span id="avg-speed-val" class="pod-value">58</span>
+                  <span id="avg-speed-unit" class="pod-unit">km/h</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- GPS Speed Sensor Health & Lock Pod -->
+            <div class="speed-sensor-pod">
+              <div class="sensor-info-row">
+                <span class="pod-label">GPS SENSOR STATUS</span>
+                <span id="gps-lock-state" class="sensor-status-val">3D SPEED FIX ACTIVE</span>
+              </div>
+              <div class="sensor-meta-row">
+                <span>ACCURACY: <b id="gps-speed-acc">±0.4 m/s (1.4 km/h)</b></span>
+                <span>STATUS: <b>LOCKED</b></span>
+              </div>
+            </div>
+
+          </section>
+
+        </main>
+
+        <!-- ==========================================
+             SIMULATION & TEST LAB DRAWER (Interactive Slide-Out)
+             ========================================== -->
+        <aside id="simulation-drawer" class="simulation-drawer">
+          <div class="drawer-header">
+            <div class="drawer-title">
+              <span>⚙️</span>
+              <span>SPEED & TEST LAB</span>
+            </div>
+            <button id="sim-close-btn" class="drawer-close-btn">✕</button>
+          </div>
+
+          <!-- Speed Slider -->
+          <div class="sim-section">
+            <div class="sim-label-row">
+              <span>VEHICLE SPEED</span>
+              <span id="sim-speed-val" class="sim-val">70 km/h</span>
+            </div>
+            <input type="range" id="sim-speed-slider" class="sim-slider" min="0" max="140" step="1" value="70">
+            
+            <!-- Quick Speed Presets -->
+            <div class="sim-presets-grid">
+              <button class="preset-btn" data-speed="0">0 km/h</button>
+              <button class="preset-btn" data-speed="30">30 km/h</button>
+              <button class="preset-btn" data-speed="50">50 km/h</button>
+              <button class="preset-btn" data-speed="70">70 km/h</button>
+              <button class="preset-btn highlight" data-speed="85">⚠️ 85 km/h</button>
+              <button class="preset-btn highlight" data-speed="120">⚠️ 120 km/h</button>
+            </div>
+            <div style="font-size:10.5px; color:var(--text-dim); margin-top:6px;">
+              *Speeds above 80 km/h will trigger the red <b>MASTER CAUTION</b> alert light.
+            </div>
+          </div>
+
+          <!-- Temperature Slider (Tests Black Ice <= 3°C) -->
+          <div class="sim-section" style="margin-top: 18px;">
+            <div class="sim-label-row">
+              <span>OUTSIDE TEMPERATURE</span>
+              <span id="sim-temp-val" class="sim-val">22.0°C</span>
+            </div>
+            <input type="range" id="sim-temp-slider" class="sim-slider" min="-5" max="45" step="0.5" value="22">
+            <div style="font-size:11px; color:var(--text-dim); margin-top:6px;">
+              *Set below 3°C to trigger automatic Black Ice warning.
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts with cache busting query params -->
+  <script src="lookup-table.js?v=2.2"></script>
+  <script src="audio.js?v=2.2"></script>
+  <script src="weather.js?v=2.2"></script>
+  <script src="app.js?v=2.2"></script>
+</body>
+</html>

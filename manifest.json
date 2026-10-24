@@ -1,0 +1,22 @@
+{
+  "name": "CarPlay Automotive Digital Cluster",
+  "short_name": "AutoCluster",
+  "description": "7-Inch In-Car Digital Cockpit & CNG Efficiency Cluster for Apple CarPlay",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#02050b",
+  "theme_color": "#02050b",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
